@@ -1,0 +1,118 @@
+timestamp: 2015-10-26T11:05:57.551295
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512),
+    endereco TEXT NOT NULL,
+    cidade CHAR(512) NOT NULL,
+    cep INTEGER NOT NULL,
+    telefone INTEGER NOT NULL,
+    estado CHAR(512) NOT NULL
+);
+success!
+timestamp: 2015-10-26T11:05:57.684306
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2015-10-26T11:05:57.786593
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2015-10-26T11:05:57.920413
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2015-10-26T11:05:58.032260
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2015-10-26T11:05:58.154255
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2015-10-26T11:09:09.988639
+CREATE TABLE notas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nota DOUBLE,
+    aluno INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  NOT NULL ,
+    professor INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  NOT NULL 
+);
+success!
+timestamp: 2015-10-26T11:09:10.183290
+CREATE TABLE biblioteca(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    arquivo CHAR(512) NOT NULL,
+    professor INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  NOT NULL 
+);
+success!
+timestamp: 2015-10-26T11:09:10.295975
+CREATE TABLE forum(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Titulo CHAR(512) NOT NULL,
+    mensagem TEXT NOT NULL,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2015-10-26T11:09:10.463174
+CREATE TABLE comentarios(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    mensagem TEXT NOT NULL,
+    postagem INTEGER REFERENCES forum (id) ON DELETE CASCADE  ,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2015-10-26T11:09:10.571673
+CREATE TABLE disciplina(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(512) NOT NULL
+);
+success!
+timestamp: 2015-10-26T11:45:36.283416
+ALTER TABLE notas ADD disciplina TEXT NOT NULL;
+timestamp: 2015-10-26T11:45:50.668225
+ALTER TABLE notas ADD disciplina TEXT NOT NULL;
+timestamp: 2015-10-26T11:46:29.339426
+ALTER TABLE notas ADD disciplina TEXT;
+success!
+timestamp: 2015-10-26T11:46:29.449497
+CREATE TABLE disciplinas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(512) NOT NULL
+);
+success!
